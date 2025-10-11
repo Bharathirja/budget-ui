@@ -1,5 +1,5 @@
 [build]
-publish = "dist/Modernize"
+publish = "dist/budget"
 [[redirects]]
 from = "/"
 to = "/index.html"

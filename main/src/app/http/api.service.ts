@@ -8,7 +8,7 @@ export class ApiService {
 
   http = inject(HttpClient);
 
-  baseUrl = 'http://127.0.0.1:8000/api/v1/budget/'; // Replace with your API base URL
+  baseUrl = 'https://budget-api-m3bh.onrender.com/api/v1/budget/'; // Replace with your API base URL
 
   getCategories() {
     return this.http.get(`${this.baseUrl}categories/`);

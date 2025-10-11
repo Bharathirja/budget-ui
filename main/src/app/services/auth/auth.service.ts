@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 export class AuthService {
 
   http = inject(HttpClient);
-  apiUrl = 'http://localhost:8000/api/token/'; // Replace with your authentication API URL
+  apiUrl = 'https://budget-api-m3bh.onrender.com/api/token/'; // Replace with your authentication API URL
 
   login(credentials: { username: string; password: string }): Observable<any> {
     // Implement your login logic here, e.g., call an API to authenticate

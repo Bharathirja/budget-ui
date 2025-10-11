@@ -144,7 +144,7 @@ export class TransactionsComponent implements OnInit {
   data: any[] = [];
   resultsLength = 0;
   isLoadingResults = true;
-  apiEndpoint = 'http://127.0.0.1:8000/api/v1/budget/transactions/'; // Replace with your DRF URL
+  apiEndpoint = 'https://budget-api-m3bh.onrender.com/api/v1/budget/transactions/'; // Replace with your DRF URL
   http = inject(HttpClient)
 
 

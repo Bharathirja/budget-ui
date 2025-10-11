@@ -1,0 +1,105 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">Add New Category</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="f-w-600 m-b-8 d-block">Name <span class="text-error">*</span></mat-label>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <input matInput placeholder="Enter Category Name" formControlName="category_name" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="f-w-600 m-b-8 d-block">Description</mat-label>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <textarea matInput type="text" placeholder="Enter Description" formControlName="description"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="m-t-12">
+        <button mat-flat-button color="primary" class="m-r-8" [disabled]="categoryForm.invalid"
+          type="submit">Submit</button>
+        <button mat-stroked-button color="warn" (click)="onCancel()" type="button">Cancel</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <!-- <mat-card-title>All Categories</mat-card-title> -->
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource1" class="w-100">
+        <!-- Position Column -->
+        <ng-container matColumnDef="category_name">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-16 p-l-0">
+            Name
+          </th>
+          <td mat-cell *matCellDef="let element" class="p-l-0">
+            <div class="d-flex align-items-center">
+              <div>
+                <h6 class="f-s-14 f-w-600">
+                  {{ element.category_name }}
+                </h6>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-16 ">
+            Description
+          </th>
+          <td mat-cell *matCellDef="let element" class="w-10">
+            <h6 class="f-s-14 m-b-4">
+              <span class="text-dark f-w-600">{{ element.description?.length > 50 ? (element.description  | slice: 0-20) + '...': element.description}} </span>
+            </h6>
+          </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="created_at">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-16">
+            Created Date
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <h6 class="f-s-14 f-w-600">
+              {{ element.created_at | date: 'medium' }}
+            </h6>
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>

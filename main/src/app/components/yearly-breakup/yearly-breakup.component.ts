@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import {
     ApexChart,
@@ -41,6 +41,7 @@ export interface yearlyChart {
 })
 export class AppYearlyBreakupComponent {
     @ViewChild('chart') chart: ChartComponent = Object.create(null);
+    @Input() totalCategory: number = 0;
 
     public yearlyChart!: Partial<yearlyChart> | any;
 

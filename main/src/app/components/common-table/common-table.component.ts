@@ -54,6 +54,7 @@ export class CommonTableComponent implements OnInit {
     @Output() pageChange: EventEmitter<{ pageIndex: number, pageSize: number }> = new EventEmitter();
     @Output() sortChange: EventEmitter<any> = new EventEmitter<any>();
     @Input() showActions: boolean = false;
+    @Output() addNew: EventEmitter<void> = new EventEmitter<void>();
     dataSource = new MatTableDataSource<any>();
     searchSubject = new Subject<string>();
     searchValue: string = '';
@@ -70,6 +71,10 @@ export class CommonTableComponent implements OnInit {
 
     ngOnChanges() {
         this.updateDataSource();
+    }
+
+    onClickMake() {
+        this.addNew.emit();
     }
 
     updateDataSource() {

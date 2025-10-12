@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,17 +9,17 @@ export class ApiService {
 
   http = inject(HttpClient);
 
-  baseUrl = 'https://budget-api-m3bh.onrender.com/api/v1/budget/'; // Replace with your API base URL
+  baseUrl = environment.baseUrl; // Replace with your API base URL
 
-  getCategories() {
-    return this.http.get(`${this.baseUrl}categories/`);
+  getCategories(params?: HttpParams) {
+    return this.http.get(`${this.baseUrl}categories/`, { params });
   }
 
   addCategory(data: { category_name: string; description: string }) {
     return this.http.post(`${this.baseUrl}categories/`, data);
   }
 
-  getTransactions(params: HttpParams) {
+  getTransactions(params?: HttpParams) {
     return this.http.get(`${this.baseUrl}transactions/`, { params });
   }
 

@@ -4,6 +4,7 @@ import {
   importProvidersFrom,
 } from '@angular/core';
 import {
+  HTTP_INTERCEPTORS,
   HttpClient,
   provideHttpClient,
   withInterceptors,
@@ -31,9 +32,11 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { authInterceptor } from './interceptors/auth.interceptor';
+import { LoaderInterceptor } from './pages/budget/interceptors/loader.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     provideHttpClient(withInterceptors([authInterceptor])),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(

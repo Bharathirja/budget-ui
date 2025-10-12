@@ -1,11 +1,17 @@
 <div class="table-responsive">
+
+  <div class="d-flex align-items-center justify-content-between mb-3">
     @if(showSearch) {
-    <div class="mb-3 col-lg-4 p-l-0">
+      <div class="col-lg-4 p-l-0">
         <mat-form-field appearance="outline" class="w-100">
-            <input matInput (keyup)="onSearch($event)" [value]="searchValue" placeholder="Search..." />
+          <input matInput (keyup)="onSearch($event)" [value]="searchValue" placeholder="Search..." />
         </mat-form-field>
-    </div>
+      </div>
     }
+      <div>
+        <button mat-flat-button color="primary"  class="mini-btn" (click)="onClickMake()">Make</button>
+      </div>
+  </div>
 
     <table mat-table [dataSource]="dataSource" class="w-100" matSort (matSortChange)="onSortChange($event)">
     @for (column of columns; track $index) {
@@ -20,10 +26,6 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item>
-                <mat-icon>add</mat-icon>
-                <span>Add</span>
-              </button>
               <button mat-menu-item>
                 <mat-icon>edit</mat-icon>
                 <span>Edit</span>

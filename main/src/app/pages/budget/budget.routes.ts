@@ -1,15 +1,8 @@
 import { Routes } from '@angular/router';
-
-// ui
-import { AppBadgeComponent } from './badge/badge.component';
-import { AppChipsComponent } from './chips/chips.component';
-import { AppListsComponent } from './lists/lists.component';
-import { AppMenuComponent } from './menu/menu.component';
-import { AppTooltipsComponent } from './tooltips/tooltips.component';
-import { AppFormsComponent } from './forms/forms.component';
-import { AppTablesComponent } from './tables/tables.component';
 import { CategoryComponent } from './category/category.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { CreateTransactionComponent } from './create-transaction/create-transaction.component';
+import { CreateCategoryComponent } from './create-category/create-category.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -23,6 +16,14 @@ export const UiComponentsRoutes: Routes = [
         path: 'transactions',
         component: TransactionsComponent,
       },
+      {
+        path: 'create-transaction',
+        component: CreateTransactionComponent,
+      },
+      {
+        path: 'create-category',
+        component: CreateCategoryComponent
+      }
       // {
       //   path: 'chips',
       //   component: AppChipsComponent,

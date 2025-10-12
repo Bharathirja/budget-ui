@@ -1,43 +1,31 @@
-<mat-card class="cardWithShadow theme-card">
-  <mat-card-header>
-    <mat-card-title class="m-b-0">Add New Category</mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="b-t-1">
-    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-      <div class="row">
-        <div class="col-lg-6">
-          <!-- input -->
-          <mat-label class="f-w-600 m-b-8 d-block">Name <span class="text-error">*</span></mat-label>
-          <mat-form-field appearance="outline" class="w-100" color="primary">
-            <input matInput placeholder="Enter Category Name" formControlName="category_name" />
-          </mat-form-field>
-        </div>
 
-        <div class="col-lg-6">
-          <!-- input -->
-          <mat-label class="f-w-600 m-b-8 d-block">Description</mat-label>
-          <mat-form-field appearance="outline" class="w-100" color="primary">
-            <textarea matInput type="text" placeholder="Enter Description" formControlName="description"></textarea>
-          </mat-form-field>
-        </div>
-      </div>
 
-      <div class="m-t-12">
-        <button mat-flat-button color="primary" class="m-r-8" [disabled]="categoryForm.invalid"
-          type="submit">Submit</button>
-        <button mat-stroked-button color="warn" (click)="onCancel()" type="button">Cancel</button>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card>
+
 
 <mat-card class="cardWithShadow">
+    <mat-card-content>
+        <app-common-table
+			      (addNew)="navigateToCreateTransaction()"
+            [columns]="columns"
+            [displayedColumns]="columns"
+            [data]="data"
+            [headersColumns]="['Category', 'Description', 'Date', 'Actions']"
+            [pageSize]="pageSize"
+            [resultsLength]="resultsLength"
+            [isLoadingResults]="isLoadingResults"
+            [showSearch]="true"
+            [showActions]="true"
+            (search)="onTableSearch($event)"
+            (pageChange)="onTablePage($event)"
+            (sortChange)="onTableSort($event)">
+        </app-common-table>
+    </mat-card-content>
+</mat-card>
+<!-- <mat-card class="cardWithShadow">
   <mat-card-content>
-    <!-- <mat-card-title>All Categories</mat-card-title> -->
 
     <div class="table-responsive">
       <table mat-table [dataSource]="dataSource1" class="w-100">
-        <!-- Position Column -->
         <ng-container matColumnDef="category_name">
           <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-16 p-l-0">
             Name
@@ -53,7 +41,6 @@
           </td>
         </ng-container>
 
-        <!-- Name Column -->
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-16 ">
             Description
@@ -65,7 +52,6 @@
           </td>
         </ng-container>
 
-        <!-- Weight Column -->
         <ng-container matColumnDef="created_at">
           <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-16">
             Created Date
@@ -77,7 +63,6 @@
           </td>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
           <td mat-cell *matCellDef="let element">
@@ -102,4 +87,4 @@
       </table>
     </div>
   </mat-card-content>
-</mat-card>
+</mat-card> -->

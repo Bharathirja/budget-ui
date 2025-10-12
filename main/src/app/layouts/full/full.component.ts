@@ -6,7 +6,6 @@ import { CoreService } from 'src/app/services/core.service';
 
 import { filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
-import { NavService } from '../../services/nav.service';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';

@@ -1,0 +1,19 @@
+.snackbar-error-message {
+    color: white;
+    font-size: 15px;
+}
+button {
+  margin-left: 15px;
+}
+mat-icon {
+  margin-right: 8px;
+}
+
+
+::ng-deep .error-snackbar {
+    background-color: #f44336; /* Red background for error */
+}
+.success-snackbar {
+    background-color: #4caf50; /* Green background for success */
+}
+  

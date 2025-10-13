@@ -7,6 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { set } from 'date-fns';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { M } from '@angular/cdk/keycodes';
+import { MessageArchivedComponent } from 'src/app/components/message-archived-component/message-archived-component.component';
 
 @Component({
   selector: 'app-side-login',
@@ -28,14 +31,10 @@ export class AppSideLoginComponent {
     return this.form.controls;
   }
 
-  submit() {
-    // console.log(this.form.value);
-    // this.router.navigate(['/']);
-  }
-
+  
+  private snackBar = inject(MatSnackBar);
   onSubmit() {
     if (this.form.valid && this.form.value.username && this.form.value.password) {
-      this.submit();
       const requestPayload: { username: string, password: string} = {
         username: this.form.value.username,
         password: this.form.value.password
@@ -44,12 +43,26 @@ export class AppSideLoginComponent {
         next: (response) => {
           console.log('Login successful', response);
           sessionStorage.setItem('authToken', response.access); // Example: store token in localStorage
-          // Handle successful login, e.g., navigate to dashboard
+
           this.router.navigate(['/dashboard']);
+          this.snackBar.openFromComponent(MessageArchivedComponent,
+            {
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+              panelClass: 'success-snackbar',
+              data: 'Login Successful!!'
+            }
+          );
         },
         error: (error) => {
-          console.error('Login failed', error);
-          // Handle login error, e.g., show error message
+          this.snackBar.openFromComponent(MessageArchivedComponent,
+            {
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+              panelClass: 'success-snackbar',
+              data: error.error?.detail ? error.error?.detail : 'An error occurred'
+            }
+          );
         }
       });
     }

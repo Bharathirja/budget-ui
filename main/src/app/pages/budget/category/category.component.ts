@@ -1,17 +1,5 @@
-import { CommonModule, DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { map, Subject } from 'rxjs';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
@@ -34,23 +22,10 @@ export interface ICategory {
 
 @Component({
   selector: 'app-category',
-  imports: [MatFormFieldModule,
-    MatSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatRadioModule,
-    MatButtonModule,
-    MatCardModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatCardModule,
-    MatButtonModule, MatTableModule,
-    CommonModule,
-    MatCardModule,
-    MaterialModule,
-    MatIconModule,
-    MatMenuModule,
-    MatButtonModule, CommonTableComponent,],
+  imports: [
+    MaterialModule, 
+    CommonTableComponent,
+  ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss'
 })

@@ -28,8 +28,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       throw err;
     }));
   }
-
-
   // Pass the cloned request to the next handler
 
 };

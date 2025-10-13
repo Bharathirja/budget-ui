@@ -1,16 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/http/api.service';
 import { MaterialModule } from 'src/app/material.module';
@@ -21,24 +10,7 @@ import { map } from 'rxjs';
 @Component({
   selector: 'app-create-transaction',
   imports: [
-     MatFormFieldModule,
-    MatSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatRadioModule,
-    MatButtonModule,
-    MatCardModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatCardModule,
-    MatButtonModule,
-    CommonModule,
-    MatCardModule,
-    MaterialModule,
-    MatIconModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatDatepickerModule,
+     MaterialModule
   ],
   templateUrl: './create-transaction.component.html',
   styleUrl: './create-transaction.component.scss',

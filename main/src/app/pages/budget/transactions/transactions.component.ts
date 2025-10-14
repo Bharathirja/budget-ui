@@ -6,8 +6,11 @@ import { Subject } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
 import { HttpParams } from '@angular/common/http';
-import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateTransactionComponent } from '../create-transaction/create-transaction.component';
+import { EditTransactionComponent } from '../edit-transaction/edit-transaction.component';
+import { ConfirmDialogComponent, ConfirmDialogData } from '../confirm-dialog/confirm-dialog-component.component';
 
 @Component({
   selector: 'app-transactions',
@@ -15,7 +18,6 @@ import { Router } from '@angular/router';
     MatCardModule,
     CommonModule,
     MaterialModule,
-    CommonTableComponent,
   ],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss'
@@ -48,7 +50,7 @@ export class TransactionsComponent implements OnInit {
     this.router.navigate(['budget/create-transaction']);
   }
 
- 
+
   loadData(searchQuery?: string): void {
     this.isLoadingResults = true;
     let params = new HttpParams();
@@ -81,10 +83,64 @@ export class TransactionsComponent implements OnInit {
     });
   }
 
-  onTableSearch(searchValue: string) {
-    this.currentSearchQuery = searchValue;
+  onTableSearch(event: any) {
+    const value = (event.target as HTMLInputElement).value;
+    this.currentSearchQuery = value;
     this.pageIndex = 0;
     this.loadData(this.currentSearchQuery);
+  }
+
+  readonly dialog = inject(MatDialog);
+
+  openDialog(data: any) {
+    const dialogRef = this.dialog.open(EditTransactionComponent, {
+      data: {
+        id: data.id
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.loadData();
+    });
+  }
+
+ openConfirmDialog(transaction: any): void {
+     const dialogData: ConfirmDialogData = {
+       title: 'Confirm Action',
+       message: 'Are you sure you want to proceed with this action?'
+     };
+ 
+     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+       maxWidth: '400px',
+       data: dialogData
+     });
+ 
+     dialogRef.afterClosed().subscribe(result => {
+       if (result) {
+         console.log(result);
+         this.apiService.deleteTransaction(transaction.id).subscribe({
+           next: (res) => {
+             this.loadData();
+           }
+         })
+         console.log('User confirmed the action.');
+         // Perform the action
+       } else {
+         console.log('User dismissed the action.');
+         // Do nothing or handle dismissal
+       }
+     });
+   }
+
+
+  openAddTransactionModal() {
+    const dialogRef = this.dialog.open(CreateTransactionComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.loadData();
+    });
   }
 
   onTablePage(event: any) {

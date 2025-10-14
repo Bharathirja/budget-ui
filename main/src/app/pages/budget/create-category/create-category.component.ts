@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/http/api.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageArchivedComponent } from 'src/app/components/message-archived-component/message-archived-component.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-category',
@@ -24,6 +25,7 @@ export class CreateCategoryComponent {
   categoryService = inject(ApiService);
   router = inject(Router);
   private _snackBar = inject(MatSnackBar);
+  readonly dialog = inject(MatDialog);
 
   onSubmit() {
     if (this.categoryForm.valid) {
@@ -34,7 +36,8 @@ export class CreateCategoryComponent {
         this._snackBar.openFromComponent(MessageArchivedComponent, {
           data: 'Category added successfully!!'
         });
-        this.router.navigate(['budget/category']);
+        // this.router.navigate(['budget/category']);
+        this.dialog.closeAll();
       }, (error) => {
         console.error('Error adding category', error);
         this._snackBar.openFromComponent(MessageArchivedComponent,
@@ -45,6 +48,7 @@ export class CreateCategoryComponent {
             data: error.error?.category_name ? error.error?.category_name[0] : 'An error occurred'
           }
         )
+        this.dialog.closeAll();
       });
     }
   }

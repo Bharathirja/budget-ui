@@ -1,0 +1,68 @@
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-gap: 16px; // Adds spacing between cards
+    //   padding: 16px;
+}
+
+.transaction-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%; // Ensures all cards in a row have the same height
+}
+
+.transaction-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.transaction-amount {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: green;
+
+    &.negative {
+        color: red;
+    }
+}
+
+.mat-card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.transaction-description {
+    font-size: 0.9rem;
+    color: #757575;
+    word-break: break-word;
+}
+
+.mat-mdc-card>.mat-mdc-card-content {
+    padding-right: 24px !important;
+}
+
+.mat-mdc-card .mat-mdc-card-header+.mat-mdc-card-content {
+    padding: 0 24px 0;
+}
+
+.search {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    /* align-items: center; */
+    justify-content: center;
+}
+
+// Optional: Add media query for very small screens
+@media (max-width: 400px) {
+    .card-container {
+        grid-template-columns: 1fr; // Single column on small devices
+    }
+}

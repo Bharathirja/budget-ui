@@ -1,10 +1,18 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { map, Subject } from 'rxjs';
 import { CommonTableComponent } from 'src/app/components/common-table/common-table.component';
 import { ApiService } from 'src/app/http/api.service';
 import { MaterialModule } from 'src/app/material.module';
+import { EditCategoryComponent } from '../edit-category/edit-category.component';
+import { ConfirmDialogComponent, ConfirmDialogData } from '../confirm-dialog/confirm-dialog-component.component';
+import { CreateCategoryComponent } from '../create-category/create-category.component';
 
 export interface productsData {
   id: number;
@@ -12,6 +20,12 @@ export interface productsData {
   uname: string;
   budget: number;
   priority: string;
+}
+
+export interface PeriodicElement {
+  risk_plan: string;
+  questionnairre: string;
+  modified: any;
 }
 
 export interface ICategory {
@@ -24,7 +38,8 @@ export interface ICategory {
   selector: 'app-category',
   imports: [
     MaterialModule, 
-    CommonTableComponent,
+    // CommonTableComponent,
+    MatFormFieldModule
   ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss'
@@ -34,6 +49,7 @@ export class CategoryComponent implements OnInit {
   displayedColumns1: string[] = ['category_name', 'description', 'created_at', 'actions'];
 
   ngOnInit() {
+    
   }
 
   sortField: string = '';
@@ -51,12 +67,20 @@ export class CategoryComponent implements OnInit {
   data: any[] = [];
   resultsLength = 0;
   isLoadingResults = true;
+  searchValue: string = '';
 
   ngAfterViewInit() {
     this.loadData();
   }
 
-  navigateToCreateTransaction() {
+  onSearch(event: any) {
+    const value = (event.target as HTMLInputElement).value;
+     this.currentSearchQuery = value;
+    this.pageIndex = 0;
+    this.loadData(this.currentSearchQuery);
+  }
+
+  navigateToCreateCategory() {
     this.router.navigate(['budget/create-category']);
   }
  
@@ -105,5 +129,57 @@ export class CategoryComponent implements OnInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.searchSubject.next(filterValue);
+  }
+
+  readonly dialog = inject(MatDialog);
+
+  openDialog(data: any) {
+    const dialogRef = this.dialog.open(EditCategoryComponent, {
+      data: {
+        id: data.id
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.loadData();
+    });
+  }
+
+  openAddCategoryModal() {
+    const dialogRef = this.dialog.open(CreateCategoryComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.loadData();
+    });
+  }
+
+  openConfirmDialog(transaction: any): void {
+    const dialogData: ConfirmDialogData = {
+      title: 'Confirm Action',
+      message: 'Are you sure you want to proceed with this action?'
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '400px',
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+        this.apiService.deleteCategory(transaction.id).subscribe({
+          next: (res) => {
+            this.loadData();
+          }
+        })
+        console.log('User confirmed the action.');
+        // Perform the action
+      } else {
+        console.log('User dismissed the action.');
+        // Do nothing or handle dismissal
+      }
+    });
   }
 }

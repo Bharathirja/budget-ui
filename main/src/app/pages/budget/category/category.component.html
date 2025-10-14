@@ -1,8 +1,4 @@
-
-
-
-
-<mat-card class="cardWithShadow">
+<!-- <mat-card class="cardWithShadow">
     <mat-card-content>
         <app-common-table
 			      (addNew)="navigateToCreateTransaction()"
@@ -20,71 +16,58 @@
             (sortChange)="onTableSort($event)">
         </app-common-table>
     </mat-card-content>
-</mat-card>
-<!-- <mat-card class="cardWithShadow">
-  <mat-card-content>
-
-    <div class="table-responsive">
-      <table mat-table [dataSource]="dataSource1" class="w-100">
-        <ng-container matColumnDef="category_name">
-          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-16 p-l-0">
-            Name
-          </th>
-          <td mat-cell *matCellDef="let element" class="p-l-0">
-            <div class="d-flex align-items-center">
-              <div>
-                <h6 class="f-s-14 f-w-600">
-                  {{ element.category_name }}
-                </h6>
-              </div>
-            </div>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-16 ">
-            Description
-          </th>
-          <td mat-cell *matCellDef="let element" class="w-10">
-            <h6 class="f-s-14 m-b-4">
-              <span class="text-dark f-w-600">{{ element.description?.length > 50 ? (element.description  | slice: 0-20) + '...': element.description}} </span>
-            </h6>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="created_at">
-          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-16">
-            Created Date
-          </th>
-          <td mat-cell *matCellDef="let element">
-            <h6 class="f-s-14 f-w-600">
-              {{ element.created_at | date: 'medium' }}
-            </h6>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item>
-                <mat-icon>edit</mat-icon>
-                <span>Edit</span>
-              </button>
-              <button mat-menu-item>
-                <mat-icon>delete</mat-icon>
-                <span>Delete</span>
-              </button>
-            </mat-menu>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
-      </table>
-    </div>
-  </mat-card-content>
 </mat-card> -->
+<!-- <mat-form-field> -->
+<!-- <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter"> -->
+<!-- </mat-form-field> -->
+  <div class="col-lg-6 p-l-2 search">
+    <mat-form-field appearance="outline" class="w-100">
+      <input matInput (keyup)="onSearch($event)" [value]="currentSearchQuery" placeholder="Search..." />
+    </mat-form-field>
+    <button mat-mini-fab color="primary" (click)="openAddCategoryModal()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+
+<div class="card-container">
+  @for (transaction of data; track $index) {
+  <mat-card class="transaction-card">
+    <div class="header">
+      <mat-card-header>
+        <mat-card-title>{{ transaction.category_name | titlecase}}</mat-card-title>
+        <mat-card-subtitle>{{ transaction.updated_at | date }}</mat-card-subtitle>
+
+
+      </mat-card-header>
+      <ng-container>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openDialog(transaction)">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="openConfirmDialog(transaction)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </ng-container>
+    </div>
+
+    <mat-card-content>
+      <div class="transaction-details">
+        <p class="transaction-description">{{ transaction.description }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  }
+</div>
+@if(data.length) {
+<mat-paginator [hidePageSize]="true" (page)="onTablePage({ pageIndex: $event.pageIndex, pageSize: $event.pageSize })"
+  [length]="resultsLength" [pageSize]="pageSize" showFirstLastButtons></mat-paginator>
+}@else {
+No Data Found
+}
